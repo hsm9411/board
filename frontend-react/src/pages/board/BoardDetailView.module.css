@@ -1,0 +1,45 @@
+/* [수정] 콘텐츠 영역을 명확히 구분하는 스타일 추가 */
+.boardDetail {
+    background-color: var(--content-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 제목 스타일 */
+.boardTitle {
+    margin: 0 0 16px 0;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* 작성자 정보 및 구분선 */
+.metaInfo {
+    color: var(--secondary-text-color);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 본문 내용 */
+.comment {
+    min-height: 200px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 1.1em;
+}
+
+/* 하단 버튼 그룹 */
+.buttonGroup {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between; /* 목록 버튼과 수정/삭제 버튼을 양 끝으로 */
+    align-items: center;
+}
+
+.ownerButtons {
+    display: flex;
+    gap: 10px; /* 수정/삭제 버튼 사이 간격 */
+}

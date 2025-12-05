@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    board: 게시판 관련 모든 SQL 쿼리를 관리하는 Mapper 파일
+    - namespace: DAO에서 이 파일을 호출할 때 사용하는 고유한 이름입니다.
+                 (예: sqlSession.selectList("board.SelectBoardList", ...))
+-->
+<mapper namespace="board">
+    
+    <!-- resultMap: DB 조회 결과를 BoardVo 객체에 매핑하는 규칙 -->
+    <resultMap type="com.spring.board.vo.BoardVo" id="boardVo">
+        <result property="boardType"     column="BOARD_TYPE"/>
+        <result property="boardNum"      column="BOARD_NUM"/>
+        <result property="boardTitle"    column="BOARD_TITLE"/>
+        <result property="boardComment"  column="BOARD_COMMENT"/>
+        <result property="creator"       column="CREATOR"/>
+        <result property="boardTypeName" column="CODE_NAME"/> 
+    </resultMap>
+    
+    <!-- ID: SelectBoardList / 역할: 페이징 처리가 적용된 게시글 목록을 조회합니다. -->
+    <select id="SelectBoardList" parameterType="com.spring.board.vo.PageVo" resultMap="boardVo">
+        SELECT 
+            B.BOARD_TYPE,
+            B.BOARD_NUM,
+            B.BOARD_TITLE,
+            B.CREATOR,
+            C.CODE_NAME  
+        FROM 
+        (
+            SELECT
+                BOARD_TYPE,
+                BOARD_NUM,
+                BOARD_TITLE,
+                CREATOR,
+                ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+            FROM
+                BOARD
+            <where>
+                <if test="boardTypes != null and boardTypes.size() > 0">
+                    BOARD_TYPE IN
+                    <foreach item="type" collection="boardTypes" open="(" separator="," close=")">
+                        #{type}
+                    </foreach>
+                </if>
+            </where>
+        ) B
+        LEFT JOIN COM_CODE C 
+               ON B.BOARD_TYPE = C.CODE_ID 
+              AND C.CODE_TYPE = 'menu'
+        WHERE 
+            B.NUMROW BETWEEN #{startRow} AND #{endRow}
+        ORDER BY 
+            B.BOARD_NUM DESC
+    </select>
+    
+    <!-- ID: selectBoardType / 역할: 'menu' 타입에 해당하는 모든 게시판 종류를 조회합니다. -->
+    <select id="selectBoardType" resultType="com.spring.board.vo.CodeVo">
+        SELECT 
+            CODE_ID   AS codeId,
+            CODE_NAME AS codeName
+        FROM 
+            COM_CODE
+        WHERE 
+            CODE_TYPE = 'menu'
+        ORDER BY 
+            CODE_ID
+    </select>
+    
+    <!-- ID: selectBoardCnt / 역할: 조건에 맞는 게시글의 '총 개수'를 조회합니다. 페이징 계산에 필수적입니다. -->
+    <select id="selectBoardCnt" parameterType="com.spring.board.vo.PageVo" resultType="Integer">
+        SELECT 
+            COUNT(*) AS TOTAL_CNT 
+        FROM 
+            BOARD
+        <where>
+            <if test="boardTypes != null and boardTypes.size() > 0">
+                BOARD_TYPE IN
+                <foreach item="type" collection="boardTypes" open="(" separator="," close=")">
+                    #{type}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    
+	<!-- [수정] COM_CODE 테이블과 LEFT JOIN하여 CODE_NAME (boardTypeName)을 함께 조회하도록 변경 -->
+	<select id="boardView" parameterType="com.spring.board.vo.BoardVo" resultMap="boardVo">
+	    SELECT
+	        B.BOARD_TYPE,
+	        B.BOARD_NUM,
+	        B.BOARD_TITLE,
+	        B.BOARD_COMMENT,
+	        B.CREATOR,
+	        C.CODE_NAME AS CODE_NAME -- 'boardTypeName' 필드에 매핑될 컬럼을 가져옴
+	    FROM 
+	        BOARD B
+	    LEFT JOIN 
+	        COM_CODE C ON B.BOARD_TYPE = C.CODE_ID AND C.CODE_TYPE = 'menu'
+	    WHERE 
+	        B.BOARD_TYPE = #{boardType}
+	        AND B.BOARD_NUM  = #{boardNum}
+	</select>
+    
+    <!-- ID: boardInsert / 역할: 사용자가 작성한 새로운 게시글을 DB에 등록합니다. -->
+    <insert id="boardInsert" parameterType="com.spring.board.vo.BoardVo">
+        INSERT INTO BOARD (
+            BOARD_TYPE,
+            BOARD_NUM,
+            BOARD_TITLE,
+            BOARD_COMMENT,
+            CREATOR,
+            CREATE_TIME,
+            MODIFIER,
+            MODIFIED_TIME
+        )
+        VALUES (
+            #{boardType},
+            (
+                SELECT 
+                    NVL(MAX(B.BOARD_NUM), 0) + 1 
+                FROM 
+                    BOARD B
+                WHERE 
+                    B.BOARD_TYPE IN (SELECT CODE_ID FROM COM_CODE WHERE CODE_TYPE = 'menu')
+            ),
+            #{boardTitle},
+            #{boardComment},
+            #{creator},
+            TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+            #{creator},
+            TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        )
+    </insert>
+    
+    <!-- ID: boardUpdate / 역할: 기존 게시글을 수정합니다. -->
+    <update id="boardUpdate" parameterType="com.spring.board.vo.BoardVo">
+        UPDATE 
+            BOARD
+        SET 
+            BOARD_TITLE   = #{boardTitle},
+            BOARD_COMMENT = #{boardComment},
+            MODIFIER      = #{modifier},
+            MODIFIED_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE 
+            BOARD_NUM     = #{boardNum}
+            AND BOARD_TYPE    = #{boardType}
+    </update>
+    
+    <!-- ID: boardDelete / 역할: 특정 게시글을 삭제합니다. -->
+    <delete id="boardDelete" parameterType="com.spring.board.vo.BoardVo">
+        DELETE FROM 
+            BOARD
+        WHERE 
+            BOARD_TYPE = #{boardType}
+            AND BOARD_NUM = #{boardNum}
+    </delete>
+    
+</mapper>

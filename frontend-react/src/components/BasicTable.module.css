@@ -1,0 +1,25 @@
+
+.basicTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.basicTable th, .basicTable td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.basicTable thead {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+.basicTable tbody tr {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.basicTable tbody tr:hover {
+  background-color: #f1f1f1;
+}

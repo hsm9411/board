@@ -1,0 +1,62 @@
+# ----------------------------------------------------------------------
+# 1. IDE (통합 개발 환경) Files: Eclipse / IntelliJ / VS Code
+# ----------------------------------------------------------------------
+.vscode/        # VS Code 설정
+.idea/          # IntelliJ 설정
+.settings/      # Eclipse 설정
+.classpath      # Eclipse 설정
+.project        # Eclipse 설정
+*.iml           # IntelliJ 모듈 파일
+
+# ----------------------------------------------------------------------
+# 2. Java / Spring Backend Files
+# ----------------------------------------------------------------------
+# Build Artifacts
+/target/        # Maven 빌드 결과물
+/build/         # Gradle 빌드 결과물 (Spring Boot가 아니더라도 제외)
+
+# Package Files
+*.jar
+*.war
+*.zip
+*.tar
+
+# Logs
+*.log
+log/
+logs/
+
+# Secrets and Configuration (중요! DB 비밀번호 등 민감 정보 포함)
+*.properties.local
+*.yml.local
+*.key
+application*.properties.
+!application-default.properties # 기본 설정 파일은 포함하되, 민감 정보는 제거해야 함.
+
+# ----------------------------------------------------------------------
+# 3. Frontend (Vue / React) Files
+# ----------------------------------------------------------------------
+# Dependencies (가장 중요)
+**/node_modules/
+
+# Production/Build output
+**/dist/
+**/out/
+**/build/
+
+# Package files
+/frontend-vue/package-lock.json
+/frontend-react/package-lock.json
+
+# Vue Specific
+.history
+.vuepress/dist
+
+# React Specific
+.cache/
+
+# ----------------------------------------------------------------------
+# 4. OS Generated Files
+# ----------------------------------------------------------------------
+.DS_Store
+Thumbs.db

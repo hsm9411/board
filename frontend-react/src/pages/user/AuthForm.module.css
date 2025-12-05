@@ -1,0 +1,108 @@
+/* 화면 전체를 차지하며, 내부 아이템을 중앙 정렬시키는 컨테이너 */
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 
+    flex-grow: 1;은 App.css의 .container가 flex container일 때 사용할 수 있습니다.
+    부모가 flex가 아니므로, 최소 높이를 지정하여 중앙 정렬 공간을 확보합니다.
+    vh는 viewport height의 약자로, 100vh는 화면 전체 높이를 의미합니다.
+    80px는 헤더의 대략적인 높이입니다.
+  */
+  min-height: calc(100vh - 150px);
+}
+
+/* 폼을 감싸는 흰색 카드 */
+.authFormWrapper {
+  width: 100%;
+  max-width: 400px; /* 폼의 최대 너비 */
+  padding: 40px;
+  background: var(--content-bg-color);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--form-wrapper-shadow);
+}
+
+/* "로그인" 제목 */
+.formTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+/* 라벨 + 입력 필드 그룹 */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* 에러 메시지 공간 (레이아웃 밀림 방지) */
+.messageBox {
+  min-height: 24px;
+  margin-bottom: 20px;
+}
+
+.errorMessage {
+  color: #fa5252;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* 로그인 버튼 */
+.submitButton {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: var(--button-primary-hover-bg-color);
+}
+
+/* "목록으로" 링크가 있는 하단 영역 */
+.formFooter {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.formFooter a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.formFooter a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,65 @@
+/* [수정] 폼 전체를 감싸는 컨테이너에 시각적 스타일을 추가합니다. */
+.boardFormContainer {
+    background-color: var(--content-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    /* 
+      중요: max-width 와 margin: 0 auto 속성이 없습니다.
+      이 컨테이너는 부모인 .container의 너비를 그대로 따릅니다.
+    */
+}
+
+/* 폼 내부의 각 입력 그룹(라벨 + 입력 필드) */
+.formGroup {
+    margin-bottom: 20px; /* 그룹 간의 간격을 넉넉하게 설정 */
+}
+
+/* 라벨 스타일 */
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* 입력 필드, 선택 박스, 텍스트 영역의 공통 스타일 */
+.formGroup input[type="text"],
+.formGroup select,
+.formGroup textarea {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color); /* 입력 필드 배경색 */
+    color: var(--text-color); /* 입력 필드 글자색 */
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* 입력 필드에 포커스될 때의 스타일 */
+.formGroup input[type="text"]:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* 부드러운 포커스 효과 */
+}
+
+/* 읽기 전용 입력 필드의 스타일 (수정 페이지에서 사용) */
+.formGroup input[readonly] {
+    background-color: var(--table-header-bg); /* 비활성화된 느낌을 주는 배경색 */
+    cursor: not-allowed;
+}
+
+/* 하단 버튼 그룹 (취소, 작성/수정 버튼) */
+.buttonGroup {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end; /* 버튼들을 오른쪽으로 정렬 */
+    gap: 10px; /* 버튼 사이의 간격 */
+}
+
+/* 버튼 그룹 내의 버튼들은 App.css의 공용 button 스타일이 자동으로 적용됩니다. */
