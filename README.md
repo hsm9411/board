@@ -1,4 +1,4 @@
-```markdown
+
 # 🚀 2025 'zest' Intern Board Project
 
 Spring Legacy (MVC) 기반의 백엔드 API 시스템과 최신 프론트엔드 기술(React 19, Vue 3)을 접목시킨 풀스택 웹 애플리케이션 프로젝트입니다. 
@@ -105,4 +105,3 @@ npm run serve
 
 ## 🤝 Contributing
 이 프로젝트는 개인 학습 및 포트폴리오 목적으로 제작되었습니다. 이슈나 개선 사항은 PR로 남겨주세요.
-```
