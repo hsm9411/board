@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mbti">
+
+    <!-- VO에서 boardNum이 제거되었으므로 resultMap에서도 해당 매핑을 삭제합니다. -->
+    <resultMap type="com.spring.mbti.vo.MbtiQuestionVo" id="mbtiQuestionVo">
+        <result property="boardType"    column="BOARD_TYPE"/>
+        <result property="boardComment" column="BOARD_COMMENT"/>
+    </resultMap>
+
+    <!-- getQuestionByBoardNo는 더 이상 사용되지 않으므로 주석 처리하거나 삭제할 수 있습니다. -->
+    <!--
+    <select id="getQuestionByBoardNo" parameterType="int" resultMap="mbtiQuestionVo">
+        SELECT BOARD_TYPE, BOARD_COMMENT FROM BOARD WHERE BOARD_NUM = #{boardNum}
+    </select>
+    -->
+    
+    <!--
+      [랜덤 질문 조회 쿼리 - Oracle DB 기준]
+      Java에서 넘겨준 typeA('E')와 typeB('I')를 사용하여,
+      BOARD_TYPE이 'EI' 또는 'IE'인 질문들을 랜덤으로 N개(limit)만큼 조회합니다.
+      필요한 컬럼인 BOARD_TYPE과 BOARD_COMMENT만 선택합니다.
+    -->
+    <select id="getRandomQuestionsByType" parameterType="map" resultMap="mbtiQuestionVo">
+        SELECT *
+        FROM (
+            SELECT
+                BOARD_TYPE,
+                BOARD_COMMENT
+            FROM
+                BOARD
+            WHERE
+                BOARD_TYPE IN (#{typeA} || #{typeB}, #{typeB} || #{typeA})
+            ORDER BY
+                DBMS_RANDOM.VALUE
+        )
+        WHERE ROWNUM &lt;= #{limit}
+    </select>
+    
+</mapper>

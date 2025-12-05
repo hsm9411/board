@@ -1,0 +1,62 @@
+/* 1. CSS 변수 선언 (다크모드 포함, 이전과 동일) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #212529;
+  --primary-color: #007bff;
+  --secondary-text-color: #6c757d;
+  --border-color: #dee2e6;
+  --table-header-bg: #f8f9fa;
+  --form-bg-color: #ffffff;
+  --form-wrapper-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --content-bg-color: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #121212;
+    --text-color: #e9ecef;
+    --primary-color: #4dabf7;
+    --secondary-text-color: #adb5bd;
+    --border-color: #495057;
+    --table-header-bg: #212529;
+    --form-bg-color: #2c2c2c;
+    --form-wrapper-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --content-bg-color: #1e1e1e;
+  }
+}
+
+/* 2. body 스타일 (이전과 동일) */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* 3. [신규] App.jsx의 최상위 div 스타일 */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 4. [수정] 메인 콘텐츠 컨테이너 스타일 */
+.container {
+  width: 100%;
+  max-width: 1140px; /* 현대적인 너비 */
+  margin: 0 auto; /* 좌우 중앙 정렬 */
+  padding: 30px 20px; /* 상하, 좌우 여백 */
+  flex-grow: 1; /* 헤더를 제외한 나머지 공간을 모두 차지 */
+}
+
+/* ... 공용 button 스타일은 이전과 동일 ... */
+button {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+button:hover {
+  background-color: var(--button-hover-bg-color);
+}

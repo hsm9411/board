@@ -1,0 +1,16 @@
+/* AuthForm.module.css의 스타일을 가져와서 확장합니다. */
+@import "./AuthForm.module.css"; 
+
+.authFormWrapper.signup { max-width: 600px; }
+fieldset { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 20px; }
+legend { font-weight: 700; padding: 0 10px; }
+.inputGroup { display: flex; }
+.inputGroup input { flex-grow: 1; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.inputGroup button { flex-shrink: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 0 15px; }
+.phoneGroup { display: flex; align-items: center; gap: 10px; }
+.phoneGroup select { width: 100px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+.phoneGroup input { width: 100%; }
+.successMessage { color: #28a745; font-size: 14px; margin: 0; }
+.validationList { list-style: none; padding: 0; margin: 8px 0 0; font-size: 14px; }
+.validationList li { color: #6c757d; transition: color .3s; }
+.validationList li.valid { color: #28a745; font-weight: 600; }

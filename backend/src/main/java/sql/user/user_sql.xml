@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+    
+    <!-- 
+        회원가입 쿼리
+        - parameterType: com.spring.board.vo.UserVo
+        - 추가된 모든 컬럼(USER_PHONE1, USER_ADDR1 등)을 INSERT문에 반영합니다.
+        - creator와 create_time도 함께 저장합니다.
+    -->
+    <insert id="insertUser" parameterType="com.spring.board.vo.UserVo">
+        INSERT INTO USER_INFO (
+            USER_ID,
+            USER_PW,
+            USER_NAME,
+            USER_PHONE1,
+            USER_PHONE2,
+            USER_PHONE3,
+            USER_ADDR1,
+            USER_ADDR2,
+            USER_COMPANY,
+            CREATOR,
+            CREATE_TIME
+        ) VALUES (
+            #{userId,jdbcType=VARCHAR},
+            #{userPw,jdbcType=VARCHAR},
+            #{userName,jdbcType=VARCHAR},
+            #{userPhone1,jdbcType=VARCHAR},
+            #{userPhone2,jdbcType=VARCHAR},
+            #{userPhone3,jdbcType=VARCHAR},
+            #{userAddr1,jdbcType=VARCHAR},
+            #{userAddr2,jdbcType=VARCHAR},
+            #{userCompany,jdbcType=VARCHAR},
+            #{creator,jdbcType=VARCHAR}, -- ServiceImpl에서 설정한 creator 값(가입자 ID) 사용
+            TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        )
+    </insert>
+    
+    <!-- 
+        로그인 쿼리
+        - parameterType: com.spring.board.vo.UserVo
+        - resultType: com.spring.board.vo.UserVo
+        - 로그인 성공 시, 세션에 저장할 사용자의 모든 정보를 조회합니다.
+    -->
+    <select id="selectUser" parameterType="com.spring.board.vo.UserVo" resultType="com.spring.board.vo.UserVo">
+        SELECT
+            USER_ID         AS userId,
+            USER_PW         AS userPw,
+            USER_NAME       AS userName,
+            USER_PHONE1     AS userPhone1,
+            USER_PHONE2     AS userPhone2,
+            USER_PHONE3     AS userPhone3,
+            USER_ADDR1      AS userAddr1,
+            USER_ADDR2      AS userAddr2,
+            USER_COMPANY    AS userCompany
+        FROM
+            USER_INFO
+        WHERE
+            USER_ID = #{userId,jdbcType=VARCHAR}
+            AND USER_PW = #{userPw,jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 
+        아이디 중복 확인 쿼리
+        - parameterType: String
+        - resultType: Integer
+        - 해당 아이디를 가진 사용자의 수를 카운트합니다. (0이면 사용 가능, 1이면 중복)
+    -->
+    <select id="idCheck" parameterType="String" resultType="int">
+        SELECT 
+            COUNT(*) 
+        FROM 
+            USER_INFO
+        WHERE 
+            USER_ID = #{userId,jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 
+        전화번호 앞자리 목록 조회 쿼리
+        - resultType: com.spring.board.vo.CodeVo
+        - COM_CODE 테이블에서 CODE_TYPE이 'phone'인 코드 목록을 조회합니다.
+    -->
+    <select id="getPhoneCodeList" resultType="com.spring.board.vo.CodeVo">
+        SELECT 
+            CODE_ID AS codeId,
+            CODE_NAME AS codeName
+        FROM 
+            COM_CODE
+        WHERE
+            CODE_TYPE = 'phone'
+        ORDER BY
+            CODE_ID
+    </select>
+    
+</mapper>
