@@ -4,12 +4,10 @@ services:
     build: ./backend
     ports:
       - "8080:8080"
-    depends_on:
-      - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@db:1521/XEPDB1
-      - SPRING_DATASOURCE_USERNAME=TEST2
-      - SPRING_DATASOURCE_PASSWORD=test2
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@host.docker.internal:1521/XEPDB1
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
 
   frontend-react:
     build: ./frontend-react
@@ -24,18 +22,3 @@ services:
       - "3001:80"
     depends_on:
       - backend
-
-  db:
-    image: gvenzl/oracle-xe:latest
-    restart: always
-    environment:
-      - ORACLE_PASSWORD=test2
-      - APP_USER=TEST2
-      - APP_USER_PASSWORD=test2
-    ports:
-      - "1521:1521"
-    volumes:
-      - db_data:/opt/oracle/oradata
-
-volumes:
-  db_data:
