@@ -1,4 +1,4 @@
-package com.spring.common;
+package com.spring.common.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;
