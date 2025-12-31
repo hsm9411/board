@@ -1,12 +1,8 @@
-# board
-2025 'zest' intern board project
 
-## 📋 README.md (초안)
-
-```markdown
-# 🚀 Spring Legacy Board Project (feat. React & Vue)
+# 🚀 2025 'zest' Intern Board Project
 
 Spring Legacy (MVC) 기반의 백엔드 API 시스템과 최신 프론트엔드 기술(React 19, Vue 3)을 접목시킨 풀스택 웹 애플리케이션 프로젝트입니다. 
+
 전통적인 서버 사이드 렌더링 방식에서 벗어나 **RESTful API 아키텍처**로 전환하고, 두 가지 메이저 프론트엔드 라이브러리의 구현 방식을 비교/학습하기 위해 제작되었습니다.
 
 ## 📚 Tech Stack
@@ -67,11 +63,13 @@ Spring Legacy (MVC) 기반의 백엔드 API 시스템과 최신 프론트엔드 
 ## ⚙️ Installation & Setup
 
 ### 1. Database Setup (Oracle)
-*   로컬 Oracle DB에 아래 계정을 생성해야 합니다. (설정 파일 기준)
-    *   **Username**: `TEST2`
-    *   **Password**: `test2`
-    *   **URL**: `jdbc:oracle:thin:@localhost:1521:xe`
-*   *설정을 변경하려면 `backend/src/main/webapp/WEB-INF/spring/root-context.xml` 파일을 수정하세요.*
+로컬 Oracle DB에 아래 계정을 생성해야 프로젝트가 정상 작동합니다.
+
+*   **Username**: `TEST2`
+*   **Password**: `test2`
+*   **URL**: `jdbc:oracle:thin:@localhost:1521:xe`
+
+> ⚠️ **보안 주의**: 위 설정은 개발용 기본값입니다. 배포 시에는 반드시 `root-context.xml` 내의 DB 정보를 변경하거나 프로퍼티 파일을 분리하여 관리하세요.
 
 ### 2. Backend Run
 1.  `backend` 프로젝트를 IDE(Eclipse/IntelliJ)로 Import (Maven Project).
@@ -107,16 +105,3 @@ npm run serve
 
 ## 🤝 Contributing
 이 프로젝트는 개인 학습 및 포트폴리오 목적으로 제작되었습니다. 이슈나 개선 사항은 PR로 남겨주세요.
-```
-
----
-
-### 💡 작성자가 덧붙이는 팁 (README 반영 후 할 일)
-
-1.  **보안 주의 (중요):**
-    *   `root-context.xml`에 DB 아이디(`TEST2`)와 비밀번호(`test2`)가 그대로 노출되어 있습니다.
-    *   실제 Git에 올릴 때는 이 부분을 `db.properties` 파일로 분리하고 `.gitignore`에 등록하거나, README에 **"보안을 위해 비밀번호는 삭제 처리했습니다. 본인 환경에 맞게 수정하세요"**라고 적어두는 것이 좋습니다.
-2.  **Vue 상태관리:**
-    *   `package.json`에 **Pinia**와 **Vuex**가 동시에 설치되어 있습니다. 둘 다 사용하는 것이 의도된 것인지(마이그레이션 중 등), 아니면 하나만 쓰는데 의존성이 남은 것인지 확인해보시면 좋습니다. (README에는 일단 둘 다 적어두었습니다.)
-3.  **React 버전:**
-    *   React 19 (Beta/RC 버전 포함)와 React Router v7을 사용 중이십니다. 굉장히 최신 스택이므로, 이를 "최신 기술 도입"이라는 장점으로 어필하기 좋습니다.
