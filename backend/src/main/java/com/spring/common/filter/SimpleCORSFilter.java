@@ -16,6 +16,7 @@ public class SimpleCORSFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        // Load allowed origins from Docker Environment Variable
         String allowedOriginsStr = System.getenv("APP_CORS_ALLOWED_ORIGINS");
         if (allowedOriginsStr != null && !allowedOriginsStr.isEmpty()) {
             this.allowedOrigins = allowedOriginsStr.split(",");
@@ -34,7 +35,7 @@ public class SimpleCORSFilter implements Filter {
             response.setHeader("Access-Control-Allow-Origin", origin);
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, HEAD");
             response.setHeader("Access-Control-Max-Age", "3600");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization");
             response.setHeader("Access-Control-Allow-Credentials", "true");
         }
 
@@ -46,8 +47,7 @@ public class SimpleCORSFilter implements Filter {
     }
 
     @Override
-    public void destroy() {
-    }
+    public void destroy() {}
 
     private boolean isOriginAllowed(String origin) {
         if (origin == null || this.allowedOrigins.length == 0) {
