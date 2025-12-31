@@ -8,6 +8,6 @@ RUN mvn clean package
 # Run stage
 FROM tomcat:9-jdk11-temurin
 WORKDIR /usr/local/tomcat/webapps
-COPY --from=build /app/target/*.war ROOT.war
+COPY --from=build /app/target/ROOT.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
