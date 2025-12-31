@@ -42,21 +42,12 @@
 	<!-- =================================================================== -->
 	
 	<filter>
-	    <!-- 필터에 'corsFilter'라는 이름을 부여합니다. -->
 	    <filter-name>corsFilter</filter-name>
-	    
-	    <!-- 필터 역할을 할 자바 클래스의 전체 경로를 지정합니다. -->
-	    <!-- 만약 다른 패키지에 만드셨다면 이 경로를 그에 맞게 수정해야 합니다. -->
 	    <filter-class>com.spring.common.filter.SimpleCORSFilter</filter-class>
 	</filter>
-	
 	<filter-mapping>
-	    <!-- 위에서 정의한 'corsFilter'를 사용하겠다고 지정합니다. -->
 	    <filter-name>corsFilter</filter-name>
-	    
-	    <!-- '/api/'로 시작하는 모든 URL 요청에 이 필터를 적용합니다. -->
-	    <!-- 예: /api/boards, /api/mbti/results 등 -->
-	    <url-pattern>/api/*</url-pattern>
+	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
 	
