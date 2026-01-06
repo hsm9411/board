@@ -55,6 +55,11 @@ application*.properties.
 # React Specific
 .cache/
 
+# Environment variables
+.env
+.env.*.local
+.env.local
+
 # ----------------------------------------------------------------------
 # 4. OS Generated Files
 # ----------------------------------------------------------------------
